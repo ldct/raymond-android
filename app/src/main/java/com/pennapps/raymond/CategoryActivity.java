@@ -1,9 +1,11 @@
 package com.pennapps.raymond;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class CategoryActivity extends ActionBarActivity {
@@ -35,5 +37,9 @@ public class CategoryActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void click(View view){
+        Intent intent = new Intent(this, CameraActivity.class);
+        startActivity(intent);
     }
 }
