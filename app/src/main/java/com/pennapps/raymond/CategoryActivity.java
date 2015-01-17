@@ -19,33 +19,11 @@ import android.widget.TextView;
 public class CategoryActivity extends ActionBarActivity {
 
     LinearLayout mContent;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
-        mContent = (LinearLayout)findViewById(R.id.splash);
-                AlphaAnimation animation1 = new AlphaAnimation(0.0f, 1.0f);
-                animation1.setDuration(500);
-        animation1.setStartOffset(500);
-            ((TextView)findViewById(R.id.miniheader)).startAnimation(animation1);
-        new Handler().postDelayed(new Runnable() {
 
-            /*
-             * Showing splash screen with a timer. This will be useful when you
-             * want to show case your app logo / company
-             */
-
-            @Override
-            public void run() {
-                Animation a;
-                a = new ExpandAnimation(100, 60);
-                a.setDuration(1000);
-                mContent.startAnimation(a);
-                //mContent.setLayoutParams(lp);
-                // close this activity
-            }
-        }, 2000);
     }
 
 
@@ -74,6 +52,33 @@ public class CategoryActivity extends ActionBarActivity {
         Intent intent = new Intent(this, CameraActivity.class);
         intent.putExtra("Category", ((TextView)view).getText());
         startActivity(intent);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mContent = (LinearLayout) findViewById(R.id.splash);
+        AlphaAnimation animation1 = new AlphaAnimation(0.0f, 1.0f);
+        animation1.setDuration(500);
+        animation1.setStartOffset(500);
+        ((TextView) findViewById(R.id.miniheader)).startAnimation(animation1);
+        new Handler().postDelayed(new Runnable() {
+
+        /*
+         * Showing splash screen with a timer. This will be useful when you
+         * want to show case your app logo / company
+         */
+
+            @Override
+            public void run() {
+                Animation a;
+                a = new ExpandAnimation(100, 60);
+                a.setDuration(1000);
+                mContent.startAnimation(a);
+                //mContent.setLayoutParams(lp);
+                // close this activity
+            }
+        }, 2000);
     }
 
     private class ExpandAnimation extends Animation {

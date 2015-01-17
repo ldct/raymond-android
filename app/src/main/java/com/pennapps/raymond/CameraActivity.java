@@ -1,6 +1,7 @@
 package com.pennapps.raymond;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -12,6 +13,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +28,20 @@ public class CameraActivity extends Activity {
 
     private Camera mCamera;
     private CameraPreview mPreview;
+    private String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_camera);
+        type = getIntent().getStringExtra("Category");
+        ((TextView)findViewById(R.id.gallerybutton)).setText("Check " + type +" and Current Uploads");
+    }
 
+    public void openGallery(View view){
+        Intent intent = new Intent(this, Gallery.class);
+        intent.putExtra("Category",type);
+        startActivity(intent);
     }
 
     public void savePicture(View view){
