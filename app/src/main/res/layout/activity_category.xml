@@ -1,20 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     tools:context="com.pennapps.raymond.CategoryActivity">
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:background="@color/textdes"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:weightSum="100"
         android:orientation="vertical">
         <LinearLayout
+            android:id = "@+id/splash"
             android:background="@color/background"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="60"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_weight="100"
+            android:layout_marginBottom="0dp"
             android:gravity="center_horizontal|center_vertical"
             android:orientation="vertical">
             <LinearLayout
@@ -35,12 +37,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/miniheader"
                 android:textSize="18sp"
+                android:alpha="1"
                 android:textColor="@color/textdes"
-                android:text="An Organizer built for you"/>
+                android:text="An organizer built for you"/>
             </LinearLayout>
             </LinearLayout>
         <LinearLayout
+            android:paddingTop="@dimen/activity_horizontal_margin"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="40"
@@ -56,18 +61,18 @@
                 android:layout_weight="50"
                 android:weightSum="100">
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="0sp"
                     android:layout_height="fill_parent"
                     android:onClick="click"
-                    android:text="Hello"
+                    android:text="Receipt"
                     android:layout_weight="50"
                     android:layout_marginRight="8dp"/>
                 <Button
                     android:layout_marginLeft="8dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0sp"
                     android:layout_height="fill_parent"
                     android:onClick="click"
-                    android:text="Hello"
+                    android:text="Event"
                     android:layout_weight="50"/>
                 </LinearLayout>
             <LinearLayout
@@ -80,18 +85,18 @@
             android:layout_weight="50"
             android:weightSum="100">
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0sp"
                 android:layout_height="fill_parent"
                 android:onClick="click"
-                android:text="Hello"
+                android:text="Business Card"
                 android:layout_weight="50"
                 android:layout_marginRight="8dp"/>
             <Button
                 android:layout_marginLeft="8dp"
-                android:layout_width="wrap_content"
+                android:layout_width="0sp"
                 android:layout_height="fill_parent"
                 android:onClick="click"
-                android:text="Hello"
+                android:text="Nutrition"
                 android:layout_weight="50"/>
         </LinearLayout>
         </LinearLayout>
