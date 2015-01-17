@@ -2,6 +2,8 @@ package com.pennapps.raymond;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -83,6 +87,22 @@ public class CameraActivity extends Activity {
         }
         super.onPause();
     }
+    @Override
+    protected void onResume() {
+        if(checkCameraHardware(this)&& mCamera==null ){
+            mCamera = getCameraInstance();
+            Camera.Parameters params = mCamera.getParameters();
+            List<String> focusModes = params.getSupportedFocusModes();
+            if (focusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO))
+                params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+            mCamera.setParameters(params);
+            // Create our Preview view and set it as the content of our activity.
+            mPreview = new CameraPreview(this, mCamera);
+            FrameLayout preview = (FrameLayout) findViewById(R.id.fullscreen_content);
+            preview.addView(mPreview);
+        }
+        super.onResume();
+    }
 
     public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -116,10 +136,57 @@ public class CameraActivity extends Activity {
         public boolean onTouchEvent(MotionEvent event){
             if(event.getAction() == MotionEvent.ACTION_DOWN){
                 Log.d("down", "focusing now");
+                mCamera.cancelAutoFocus();
+                Rect focusRect = calculateTapArea(event.getX(), event.getY(), 1f);
 
-                mCamera.autoFocus(null);
+                Camera.Parameters parameters = mCamera.getParameters();
+                if (parameters.getFocusMode() != Camera.Parameters.FOCUS_MODE_AUTO) {
+                    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+                }
+                List<Camera.Area> mylist = new ArrayList<Camera.Area>();
+                mylist.add(new Camera.Area(new Rect(-1000, -1000, 1000, 0), 750));
+                parameters.setFocusAreas(mylist);
+
+                try {
+                    mCamera.cancelAutoFocus();
+                    mCamera.setParameters(parameters);
+                    mCamera.startPreview();
+                    mCamera.autoFocus(new Camera.AutoFocusCallback() {
+                        @Override
+                        public void onAutoFocus(boolean success, Camera camera) {
+                            if (!camera.getParameters().getFocusMode().equals(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+                                Camera.Parameters parameters = camera.getParameters();
+                                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+                                parameters.setFocusAreas(null);
+                                camera.setParameters(parameters);
+                                camera.startPreview();
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             return true;
+        }
+        private Rect calculateTapArea(float x, float y, float coefficient) {
+            int areaSize = Float.valueOf(72 * coefficient).intValue();
+
+            int left = clamp((int) x - areaSize / 2, 0, getWidth() - areaSize);
+            int top = clamp((int) y - areaSize / 2, 0, getHeight() - areaSize);
+
+            RectF rectF = new RectF(left, top, left + areaSize, top + areaSize);
+
+            return new Rect(Math.round(rectF.left), Math.round(rectF.top), Math.round(rectF.right), Math.round(rectF.bottom));
+        }
+        private int clamp(int x, int min, int max) {
+            if (x > max) {
+                return max;
+            }
+            if (x < min) {
+                return min;
+            }
+            return x;
         }
 
         public void surfaceCreated(SurfaceHolder holder) {
@@ -179,6 +246,7 @@ public class CameraActivity extends Activity {
             setMeasuredDimension(width, (int) (width * ratio));
 //        setMeasuredDimension((int) (width * ratio), height);
         }
+
 
         private Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int w, int h) {
             final double ASPECT_TOLERANCE = 0.1;
