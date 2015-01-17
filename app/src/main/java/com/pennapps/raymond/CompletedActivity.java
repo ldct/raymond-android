@@ -13,7 +13,16 @@ public class CompletedActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_completed);
-        ((TextView)findViewById(R.id.displayText)).setText(getIntent().getStringExtra("File Name"));
+        String results = getIntent().getStringExtra("File Name");
+        if(results.equals("Error")){
+            ((TextView)findViewById(R.id.titletext)).setText("Opps");
+            ((TextView)findViewById(R.id.displayText)).setText("Something failed back there, please try again!");
+        }else{
+            ((TextView)findViewById(R.id.titletext)).setText("Success");
+            ((TextView)findViewById(R.id.displayText)).setText("Feel free to add more, your library will be updated soon");
+
+        }
+        //((TextView)findViewById(R.id.displayText)).setText(getIntent().getStringExtra("File Name"));
     }
 
 
