@@ -83,6 +83,14 @@ public class CameraActivity extends Activity {
         }
         return c; // returns null if camera is unavailable
     }
+    @Override
+    protected void onPause() {
+        if (mCamera != null) {
+            mCamera.release();
+            mCamera = null;
+        }
+        super.onPause();
+    }
 
     public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
 
