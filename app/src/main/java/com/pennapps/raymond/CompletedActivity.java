@@ -39,12 +39,8 @@ public class CompletedActivity extends ActionBarActivity {
         }
 
         Intent imageUploadIntent = new Intent(this, ImageUploaderService.class);
-        imageUploadIntent.putExtra(ImageUploaderService.PARAM_IN_MSG, "hello");
+        imageUploadIntent.putExtra(ImageUploaderService.PARAM_IN_MSG, getIntent().getStringExtra("File Name"));
         startService(imageUploadIntent);
-
-        // new UploadImageTask().execute("http://stackoverflow.com");
-
-        //getIntent().getStringExtra("File Name")
     }
 
 
