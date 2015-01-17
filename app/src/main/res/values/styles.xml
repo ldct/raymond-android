@@ -4,9 +4,15 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name ="android:buttonStyle">@style/button</item>
     </style>
 
     <style name="FullscreenTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name ="android:buttonBarStyle">@style/button</item>
+    </style>
+    <style name = "button" parent="android:Widget.Holo.Button.Borderless.Small">
+        <item name = "android:background">@drawable/button</item>
+        <item name= "android:textColor">@color/text</item>
     </style>
 
     <style name="ButtonBar">
