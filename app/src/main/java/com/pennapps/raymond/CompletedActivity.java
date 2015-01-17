@@ -39,12 +39,8 @@ public class CompletedActivity extends ActionBarActivity {
         }
 
         Intent imageUploadIntent = new Intent(this, ImageUploaderService.class);
-        imageUploadIntent.putExtra(ImageUploaderService.PARAM_IN_MSG, "hello");
+        imageUploadIntent.putExtra(ImageUploaderService.PARAM_IN_MSG, getIntent().getStringExtra("File Name"));
         startService(imageUploadIntent);
-
-        // new UploadImageTask().execute("http://stackoverflow.com");
-
-        //getIntent().getStringExtra("File Name")
     }
 
 
@@ -69,48 +65,5 @@ public class CompletedActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    public class UploadImageTask  extends AsyncTask<String, Integer , String> {
-        public byte[] dataToServer;
-
-        @Override
-        protected String doInBackground(String... uri) {
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpResponse response;
-            String responseString = null;
-
-            Log.d("http", "starting");
-
-            try {
-                response = httpclient.execute(new HttpGet(uri[0]));
-                Log.d("http", "executed");
-                StatusLine statusLine = response.getStatusLine();
-                Log.d("http", String.valueOf(statusLine.getStatusCode()));
-                if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-                    ByteArrayOutputStream out = new ByteArrayOutputStream();
-                    response.getEntity().writeTo(out);
-                    out.close();
-                    responseString = out.toString();
-                } else{
-                    response.getEntity().getContent().close();
-                    throw new IOException(statusLine.getReasonPhrase());
-                }
-            } catch (ClientProtocolException e) {
-                Log.d("http", "clientprotocolexception");
-            } catch (IOException e) {
-                Log.d("http", "ioexception");
-            }
-            return responseString;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Log.d("http", "done");
-            Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
-        }
-
-
-    }
-
 
 }
