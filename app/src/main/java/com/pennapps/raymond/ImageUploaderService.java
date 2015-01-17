@@ -24,6 +24,8 @@ import java.io.IOException;
 public class ImageUploaderService extends IntentService {
 
     public static final String PARAM_IN_MSG = "in_message";
+    public static final String BACKEND_BASE_URL = "http://104.131.66.104";
+    public static final String BACKEND_TASK_URL = BACKEND_BASE_URL + "/task";
 
     public ImageUploaderService() {
         super("ImageUploaderThread");
@@ -33,7 +35,7 @@ public class ImageUploaderService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d("image", "handleIntent started");
         Log.d("image", intent.getStringExtra(PARAM_IN_MSG));
-        new UploadImageTask().execute("http://stackoverflow.com");
+        new UploadImageTask().execute();
         return;
     }
 
@@ -43,15 +45,15 @@ public class ImageUploaderService extends IntentService {
         @Override
         protected String doInBackground(String... uri) {
             HttpClient httpclient = new DefaultHttpClient();
-            HttpGet get_request = new HttpGet(uri[0]);
-            get_request.getParams().setBooleanParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);
+            HttpPost post_request = new HttpPost(BACKEND_TASK_URL);
+            post_request.getParams().setBooleanParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);
             HttpResponse response;
             String responseString = null;
 
             Log.d("image", "http starting");
 
             try {
-                response = httpclient.execute(get_request);
+                response = httpclient.execute(post_request);
 
                 Log.d("image", "response received");
 
