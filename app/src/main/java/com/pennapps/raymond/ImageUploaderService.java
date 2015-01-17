@@ -72,6 +72,7 @@ public class ImageUploaderService extends IntentService {
             } catch (IOException e) {
                 Log.d("http", "ioexception");
             }
+            Log.d("image", "rs: " + responseString);
             return responseString;
         }
 
@@ -79,10 +80,6 @@ public class ImageUploaderService extends IntentService {
         protected void onPostExecute(String result) {
             Log.d("image", "http done");
             // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-            Log.d("image", String.valueOf(progress[0]));
         }
 
 
