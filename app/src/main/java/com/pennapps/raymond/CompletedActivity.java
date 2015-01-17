@@ -22,7 +22,7 @@ public class CompletedActivity extends ActionBarActivity {
             ((TextView)findViewById(R.id.displayText)).setText("Feel free to add more, your library will be updated soon");
 
         }
-        //((TextView)findViewById(R.id.displayText)).setText(getIntent().getStringExtra("File Name"));
+        //getIntent().getStringExtra("File Name")
     }
 
 
