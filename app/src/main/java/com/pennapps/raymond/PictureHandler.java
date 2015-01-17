@@ -48,20 +48,25 @@ public class PictureHandler implements PictureCallback {
             FileOutputStream fos = new FileOutputStream(pictureFile);
             fos.write(data);
             fos.close();
-            Toast.makeText(context, "New Image saved:" + photoFile,
-                    Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(context, CompletedActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("File Name", filename);
+            intent.putExtras(bundle);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         } catch (Exception error) {
             Log.d("oh no", "File" + filename + "not saved: "
                     + error.getMessage());
             Toast.makeText(context, "Image could not be saved.",
                     Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(context, CompletedActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("File Name", "Error");
+            intent.putExtras(bundle);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         }
-        Intent intent = new Intent(context, CompletedActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("File Name", filename);
-        intent.putExtras(bundle);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
 
     }
 
