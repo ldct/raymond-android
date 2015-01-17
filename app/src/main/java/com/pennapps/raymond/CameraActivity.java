@@ -1,11 +1,7 @@
 package com.pennapps.raymond;
-
-import com.pennapps.raymond.util.SystemUiHider;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,9 +10,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,7 +17,6 @@ import java.util.List;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  *
- * @see SystemUiHider
  */
 public class CameraActivity extends Activity {
 
