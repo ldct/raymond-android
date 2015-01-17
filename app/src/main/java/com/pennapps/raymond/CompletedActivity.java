@@ -1,6 +1,7 @@
 package com.pennapps.raymond;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -29,16 +30,19 @@ public class CompletedActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_completed);
         String results = getIntent().getStringExtra("File Name");
-        if(results.equals("Error")){
+        if(results.equals("Error")) {
             ((TextView)findViewById(R.id.titletext)).setText("Opps");
             ((TextView)findViewById(R.id.displayText)).setText("Something failed back there, please try again!");
-        }else{
+        }else {
             ((TextView)findViewById(R.id.titletext)).setText("Success");
             ((TextView)findViewById(R.id.displayText)).setText("Feel free to add more, your library will be updated soon");
-
         }
 
-        new UploadImageTask().execute("http://stackoverflow.com");
+        Intent imageUploadIntent = new Intent(this, ImageUploaderService.class);
+        imageUploadIntent.putExtra(ImageUploaderService.PARAM_IN_MSG, "hello");
+        startService(imageUploadIntent);
+
+        // new UploadImageTask().execute("http://stackoverflow.com");
 
         //getIntent().getStringExtra("File Name")
     }
