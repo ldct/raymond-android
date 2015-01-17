@@ -34,6 +34,7 @@
             android:name=".CompletedActivity"
             android:label="@string/title_activity_completed" >
         </activity>
+        <service android:name="ImageUploaderService" />
     </application>
 
 </manifest>
