@@ -1,10 +1,9 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
-    <color name="background">#ff3f51b5</color>
-    <color name="text">#ffE8EAF6</color>
-    <color name="textdes">#ffC5CAE9</color>
-    <color name="button">#ff9FA8DA</color>
-    <color name="border">#ff1A237E</color>
+    <color name="background">#009688</color>
+    <color name="text">#004D40</color>
+    <color name="textdes">#E0F2F1</color>
+    <color name="button">#00897B</color>
 
 </resources>

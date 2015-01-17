@@ -12,7 +12,7 @@
     </style>
     <style name = "button" parent="android:Widget.Holo.Button.Borderless.Small">
         <item name = "android:background">@drawable/button</item>
-        <item name= "android:textColor">@color/text</item>
+        <item name= "android:textColor">@color/textdes</item>
     </style>
 
     <style name="ButtonBar">
