@@ -24,27 +24,27 @@ public class BusinessCard extends DataStructure{
     }
 
 
-    public String getDate(){
+    public String getName(){
         return getField(0);
     }
-    public String getTime(){
+    public String getEmail(){
         return getField(1);
     }
-    public String getLocation(){
+    public String getNumber(){
         return getField(2);
     }
-    public String getItem(){
+    public String getJob(){
         return getField(3);
     }
-    public String getPrice(){
+    public String getCompany(){
         return getField(4);
     }
 
-    public ArrayList<Receipt> getCompleteData(){
+    public ArrayList<BusinessCard> getCompleteData(){
         ArrayList<String[]> temp =  getAllData();
-        ArrayList<Receipt> returned = new ArrayList<Receipt>();
+        ArrayList<BusinessCard> returned = new ArrayList<BusinessCard>();
         for(String[] s: temp){
-            returned.add(new Receipt(s, context));
+            returned.add(new BusinessCard(s, context));
         }
         return returned;
     }

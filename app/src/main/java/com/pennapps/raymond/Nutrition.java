@@ -24,27 +24,33 @@ public class Nutrition extends DataStructure{
     }
 
 
-    public String getDate(){
+    public String getFood(){
         return getField(0);
     }
-    public String getTime(){
+    public String getCalories(){
         return getField(1);
     }
-    public String getLocation(){
+    public String getFat(){
         return getField(2);
     }
-    public String getItem(){
+    public String getProtein(){
         return getField(3);
     }
-    public String getPrice(){
+    public String getCarbs(){
         return getField(4);
     }
+    public String getSodium(){
+        return getField(5);
+    }
+    public String getSugar(){
+        return getField(6);
+    }
 
-    public ArrayList<Receipt> getCompleteData(){
+    public ArrayList<Nutrition> getCompleteData(){
         ArrayList<String[]> temp =  getAllData();
-        ArrayList<Receipt> returned = new ArrayList<Receipt>();
+        ArrayList<Nutrition> returned = new ArrayList<Nutrition>();
         for(String[] s: temp){
-            returned.add(new Receipt(s, context));
+            returned.add(new Nutrition(s, context));
         }
         return returned;
     }

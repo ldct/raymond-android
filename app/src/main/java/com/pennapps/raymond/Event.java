@@ -30,21 +30,21 @@ public class Event extends DataStructure{
     public String getTime(){
         return getField(1);
     }
-    public String getLocation(){
+    public String getName(){
         return getField(2);
     }
-    public String getItem(){
+    public String getLocation(){
         return getField(3);
     }
     public String getPrice(){
         return getField(4);
     }
 
-    public ArrayList<Receipt> getCompleteData(){
+    public ArrayList<Event> getCompleteData(){
         ArrayList<String[]> temp =  getAllData();
-        ArrayList<Receipt> returned = new ArrayList<Receipt>();
+        ArrayList<Event> returned = new ArrayList<Event>();
         for(String[] s: temp){
-            returned.add(new Receipt(s, context));
+            returned.add(new Event(s, context));
         }
         return returned;
     }
