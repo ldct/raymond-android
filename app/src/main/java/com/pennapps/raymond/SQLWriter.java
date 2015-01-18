@@ -89,7 +89,7 @@ public class SQLWriter extends SQLiteOpenHelper {
                     data.add(cursor.getString(i));
                 }
                 // Adding contact to list
-                returnlist.add(new String[returnlist.size()]);
+                returnlist.add(data.toArray(new String[returnlist.size()]));
             } while (cursor.moveToNext());
         }
 
