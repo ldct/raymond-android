@@ -46,7 +46,7 @@ public class SQLWriter extends SQLiteOpenHelper {
         for(String s: titles) {
             CREATE_CONTACTS_TABLE += s + " TEXT,";
             }
-        db.execSQL(CREATE_CONTACTS_TABLE.substring(0,CREATE_CONTACTS_TABLE.length()) + ")");
+        db.execSQL(CREATE_CONTACTS_TABLE + "Token TEXT, Image TEXT)");
     }
 
     // Upgrading database
@@ -92,20 +92,36 @@ public class SQLWriter extends SQLiteOpenHelper {
         }
 
         // return contact list
+        cursor.close();
+        db.close();
         return returnlist;
     }
 
 
+    // Update new contact
+    public void updateData(String[] data, String token) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT Token FROM " + TABLE_NAME + "WHERE Token = ?";
+
+
+        ContentValues values = new ContentValues();
+        int i=0;
+                for(String s: titles ){
+                    values.put(s, data[i]); // Contact Name
+                    i++;
+                }
+
+        // Inserting Row
+        db.update(TABLE_NAME, values, selectQuery, new String[]{token});
+        db.close(); // Closing database connection
+    }
     // Adding new contact
-    public void addData(String[] data) {
+    public void addData(String token, String file) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        int i = 0;
-        for(String s: titles ){
-            values.put(s, data[i]); // Contact Name
-            i++;
-        }
+        values.put("Token", token); // Contact Name
+        values.put("Image", file); // Contact Phone Number
 
         // Inserting Row
         db.insert(TABLE_NAME, null, values);

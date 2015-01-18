@@ -19,8 +19,11 @@ public class Event extends DataStructure{
         this.context = context;
     }
 
-    public void addThis(){
-        addData(data);
+    public void addThis(String token){
+        addData(data, token);
+    }
+    public void addtoDB(String token, String filename){
+        addData(token, filename);
     }
 
 

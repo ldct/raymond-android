@@ -13,14 +13,17 @@ public class Receipt extends DataStructure{
     private Context context;
     public Receipt(String[] details, Context context){
         super("Receipt", new String[]{
-                "Date","Time","Location","Item","Price"
+                "Date","Time","Location","Item","Price" // Token, Image
         }, details, context);
         data = details;
         this.context = context;
     }
 
-    public void addThis(){
-        addData(data);
+    public void addThis(String token){
+        addData(data, token);
+    }
+    public void addtoDB(String token, String filename){
+        addData(token, filename);
     }
 
 

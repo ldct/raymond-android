@@ -26,7 +26,7 @@ public abstract class DataStructure {
      *
      * @return the fields for this data type
      */
-    public String[] getAllFields(){
+    protected String[] getAllFields(){
         return header;
     }
 
@@ -36,16 +36,20 @@ public abstract class DataStructure {
      * @param id Must be zero indexed
      * @return data
      */
-    public String getField(int id){
+    protected String getField(int id){
         return data[id];
     }
 
-    public ArrayList<String[]> getAllData(){
+    protected ArrayList<String[]> getAllData(){
         return sqlWriter.getAllContacts();
     }
 
-    public void addData(String[] data){
-        sqlWriter.addData(data);
+    protected void addData(String[] data, String token){
+        sqlWriter.updateData(data, token);
+    }
+
+    protected void addData(String token, String filename){
+        sqlWriter.addData(token, filename);
     }
 
 }
