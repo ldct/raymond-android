@@ -27,11 +27,14 @@ import org.apache.http.protocol.HttpContext;
 
 public class ImageUploaderService extends IntentService {
 
-    public static final String PARAM_IN_MSG = "in_message";
+    public static final String PARAM_FILENAME = "PARAM_FILENAME";
+    public static final String PARAM_CATEGORY = "PARAM_CATEGORY";
+
     public static final String BACKEND_BASE_URL = "http://104.131.66.104";
     public static final String BACKEND_TASK_URL = BACKEND_BASE_URL + "/task";
 
     public String inputImageFilePath;
+    public String inputCategory;
 
     public ImageUploaderService() {
         super("ImageUploaderThread");
@@ -39,9 +42,10 @@ public class ImageUploaderService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.d("image", "handleIntent started");
-        inputImageFilePath = intent.getStringExtra(PARAM_IN_MSG);
-        Log.d("image", inputImageFilePath);
+
+        inputImageFilePath = intent.getStringExtra(PARAM_FILENAME);
+        inputCategory = intent.getStringExtra(PARAM_CATEGORY);
+
         new UploadImageTask().execute();
         return;
     }
@@ -53,8 +57,7 @@ public class ImageUploaderService extends IntentService {
         protected String doInBackground(String... uri) {
 
             HttpClient httpclient = new DefaultHttpClient();
-            HttpContext localContext = new BasicHttpContext();
-            HttpPost post_request = new HttpPost(BACKEND_TASK_URL);
+            HttpPost post_request = new HttpPost(BACKEND_TASK_URL + "?category=" + inputCategory);
             post_request.getParams().setBooleanParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);
 
             HttpResponse response;
@@ -96,10 +99,8 @@ public class ImageUploaderService extends IntentService {
                     response.getEntity().getContent().close();
                     throw new IOException(statusLine.getReasonPhrase());
                 }
-            } catch (ClientProtocolException e) {
-                Log.d("http", "clientprotocolexception");
-            } catch (IOException e) {
-                Log.d("http", "ioexception");
+            } catch (Exception e) {
+                Log.e("image", "exception occured");
             }
             Log.d("image", "rs: " + responseString);
             return responseString;
@@ -107,8 +108,7 @@ public class ImageUploaderService extends IntentService {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("image", "http done");
-            // Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_LONG).show();
+            // Log.d("image", "http done");
         }
 
 

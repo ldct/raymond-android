@@ -30,18 +30,22 @@ public class CompletedActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_completed);
-        String results = getIntent().getStringExtra("File Name");
-        //String type = getIntent().getStringExtra("Category");
-        if(results.equals("Error")) {
+
+        String filename = getIntent().getStringExtra("File Name");
+        String category = getIntent().getStringExtra("Category");
+
+        if (filename.equals("Error")) {
             ((TextView)findViewById(R.id.titletext)).setText("Opps");
             ((TextView)findViewById(R.id.displayText)).setText("Something failed back there, please try again!");
-        }else {
+        } else {
             ((TextView)findViewById(R.id.titletext)).setText("Success");
             ((TextView)findViewById(R.id.displayText)).setText("Feel free to add more, your library will be updated soon");
         }
 
         Intent imageUploadIntent = new Intent(this, ImageUploaderService.class);
-        imageUploadIntent.putExtra(ImageUploaderService.PARAM_IN_MSG, getIntent().getStringExtra("File Name"));
+        imageUploadIntent.putExtra(ImageUploaderService.PARAM_FILENAME, filename);
+        imageUploadIntent.putExtra(ImageUploaderService.PARAM_CATEGORY, category);
+
         startService(imageUploadIntent);
     }
 
