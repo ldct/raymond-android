@@ -118,15 +118,16 @@ public class SQLWriter extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
     // Adding new contact
-    public void addData(String token, String file) {
+    public void addData(String token, String file, String column) {
         SQLiteDatabase db = this.getWritableDatabase();
+
 
         ContentValues values = new ContentValues();
         values.put("Token", token); // Contact Name
         values.put("Image", file); // Contact Phone Number
 
         // Inserting Row
-        db.insert(TABLE_NAME, null, values);
+        db.insert(TABLE_NAME, column, values);
         db.close(); // Closing database connection
     }
 }

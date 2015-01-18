@@ -51,7 +51,7 @@ public abstract class DataStructure {
     }
 
     protected void addData(String token, String filename){
-        sqlWriter.addData(token, filename);
+        sqlWriter.addData(token, filename, header[0]);
     }
 
 }
