@@ -3,14 +3,12 @@ package com.pennapps.raymond;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Base64;
 import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
@@ -22,9 +20,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-
 public class ImageUploaderService extends IntentService {
 
     public static final String PARAM_FILENAME = "PARAM_FILENAME";
@@ -33,8 +28,8 @@ public class ImageUploaderService extends IntentService {
     public static final String BACKEND_BASE_URL = "http://104.131.66.104";
     public static final String BACKEND_TASK_URL = BACKEND_BASE_URL + "/task";
 
-    public String inputImageFilePath;
-    public String inputCategory;
+    private String inputImageFilePath;
+    private String inputCategory;
 
     public ImageUploaderService() {
         super("ImageUploaderThread");
@@ -107,7 +102,6 @@ public class ImageUploaderService extends IntentService {
             if (inputCategory.equals("Receipt")) {
                 Receipt r = new Receipt(null, getApplicationContext());
                 r.addtoDB(responseString, inputImageFilePath);
-                //
 
                 Receipt r2 = new Receipt(new String[]{
                         "Date4","Time4","Location4","Item4","Price4" // Token, Image
@@ -124,6 +118,8 @@ public class ImageUploaderService extends IntentService {
             } else if (inputCategory.equals("Nutrition")) {
                 Nutrition n = new Nutrition(null, getApplicationContext());
                 n.addtoDB(responseString, inputImageFilePath);
+            } else {
+                Log.e("image", "Unknown inputCategory");
             }
 
             return responseString;

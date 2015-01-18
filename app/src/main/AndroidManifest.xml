@@ -38,6 +38,7 @@
         </activity>
 
         <service android:name=".ImageUploaderService" />
+        <service android:name=".RefreshStatusService" />
 
         <activity
             android:name=".Gallery"

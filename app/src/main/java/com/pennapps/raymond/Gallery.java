@@ -1,9 +1,11 @@
 package com.pennapps.raymond;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,11 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Gallery extends ActionBarActivity {
 
-    private String type;
+    private String type; //category
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,17 +40,17 @@ public class Gallery extends ActionBarActivity {
         super.onPostCreate(savedInstanceState);
         LinearLayout ln = (LinearLayout)findViewById(R.id.chart);
         ArrayList receipts;
-        if(type.equals("Receipt")) {
+        if (type.equals("Receipt")) {
             receipts = (new Receipt(null, this)).getCompleteData();
-        }else if(type.equals("Event")) {
+        } else if (type.equals("Event")) {
             receipts = (new Event(null, this)).getCompleteData();
         }
-        else if(type.equals("BusinessCard")) {
+        else if (type.equals("BusinessCard")) {
             receipts = (new BusinessCard(null, this)).getCompleteData();
-        }else{
+        } else {
             receipts = (new Nutrition(null, this)).getCompleteData();
         }
-        if(receipts.size()>0) {
+        if (receipts.size()>0) {
             int size = ((DataStructure)receipts.get(0)).getAllFields().length+2;
             LinearLayout header = new LinearLayout(this);
             LinearLayout.LayoutParams LLParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -123,11 +126,25 @@ public class Gallery extends ActionBarActivity {
 
     public void refresh(View view){
         //TODO
+        if (type.equals("Receipt")) {
+            Receipt rs = new Receipt(null, this);
+            ArrayList<Receipt> completeData = rs.getCompleteData();
+            Log.d("refresh", String.valueOf(completeData.size()));
 
-        BusinessCard bc = new BusinessCard(null,this);
-        ArrayList<BusinessCard> completeData = bc.getCompleteData();
+            for (Receipt r : completeData) {
+                // r.getToken();
+            }
 
-        //type is the category
+            ArrayList<String> tokenList = new ArrayList<String>();
+
+            Intent refreshDataIntent = new Intent(this, RefreshStatusService.class);
+            refreshDataIntent.putExtra(RefreshStatusService.PARAM_TOKENS, tokenList);
+
+            startService(refreshDataIntent);
+
+            Log.d("refresh", "done with starting service");
+
+        }
 
 
     }
