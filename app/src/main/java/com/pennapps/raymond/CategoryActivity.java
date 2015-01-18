@@ -50,7 +50,7 @@ public class CategoryActivity extends ActionBarActivity {
     }
     public void click(View view){
         Intent intent = new Intent(this, CameraActivity.class);
-        intent.putExtra("Category", ((TextView)view).getText());
+        intent.putExtra("Category", ((TextView)view).getText().toString().replaceAll("\\s+",""));
         startActivity(intent);
     }
 
