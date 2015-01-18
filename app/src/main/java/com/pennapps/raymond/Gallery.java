@@ -57,7 +57,7 @@ public class Gallery extends ListActivity {
         }
         else if(type.equals("BusinessCard")) {
             ArrayList<BusinessCard> receipts = (new BusinessCard(null, this)).getCompleteData();
-            setListAdapter(new CustomAdapter(this, receipts, R.layout.nutrition));
+            setListAdapter(new CustomAdapter(this, receipts, R.layout.bcard));
         }
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         getListView().setMultiChoiceModeListener(new ModeCallback());
