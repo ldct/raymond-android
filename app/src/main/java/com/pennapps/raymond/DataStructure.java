@@ -44,6 +44,9 @@ public abstract class DataStructure {
     protected ArrayList<String[]> getAllData(){
         return sqlWriter.getAllContacts();
     }
+    protected ArrayList<String> getAllTokens(){
+        return sqlWriter.getAllTokens();
+    }
 
     protected void addData(String[] data, String token){
         sqlWriter.updateData(data, token);
