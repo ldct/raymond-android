@@ -1,4 +1,4 @@
-package com.sevenhourdev.getlyric;
+package com.pennapps.raymond;
 
 import android.os.StrictMode;
 
