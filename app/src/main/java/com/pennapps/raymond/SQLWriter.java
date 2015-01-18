@@ -114,7 +114,7 @@ public class SQLWriter extends SQLiteOpenHelper {
                 }
 
         // Inserting Row
-        db.update(TABLE_NAME, values, "Token = " + token,null);
+        db.update(TABLE_NAME, values, "Token = '" + token+"'",null);
         db.close(); // Closing database connection
     }
     // Adding new contact
