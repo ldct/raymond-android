@@ -106,12 +106,18 @@ public class ImageUploaderService extends IntentService {
 
             if (inputCategory.equals("Receipt")) {
                 Log.d("image", "adding to db");
-                Receipt r = new Receipt(new String[]{
-                        "Date0","Time0","Location0","Item0","Price0" // Token, Image
-                }, getApplicationContext());
+                Receipt r = new Receipt(null, getApplicationContext());
                 r.addtoDB(responseString, inputImageFilePath);
-                r.addThis(responseString);
                 Log.d("image", "added to db");
+
+                //
+
+                Receipt r2 = new Receipt(new String[]{
+                        "Date4","Time4","Location4","Item4","Price4" // Token, Image
+                }, getApplicationContext());
+                r2.addThis("2c136bf621a5c937");
+
+
             }
 
             return responseString;
