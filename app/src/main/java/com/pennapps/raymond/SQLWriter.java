@@ -99,6 +99,44 @@ public class SQLWriter extends SQLiteOpenHelper {
         return returnlist;
     }
 
+    /**********************************************************************
+     * RETRIEVING ALL ROWS FROM THE DATABASE TABLE
+     *
+     * This is an example of how to retrieve all data from a database
+     * table using this class.  You should edit this method to suit your
+     * needs.
+     *
+     * the key is automatically assigned by the database
+     *
+     * @return Arraylist of all the Songs (in Song)
+     */
+
+    public ArrayList<String> getAllTokens() {
+        ArrayList<String> returnlist = new ArrayList<String>();
+        // Select All Query
+        String selectQuery = "SELECT Token FROM " + TABLE_NAME;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                ArrayList<String> data = new ArrayList<String>();
+                for (int i =0; i<cursor.getColumnCount(); i++){
+                    data.add(cursor.getString(i));
+                }
+                // Adding contact to list
+                returnlist.add(data.get(0));
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        cursor.close();
+        db.close();
+        return returnlist;
+    }
+
 
     // Update new contact
     public void updateData(String[] data, String token) {
