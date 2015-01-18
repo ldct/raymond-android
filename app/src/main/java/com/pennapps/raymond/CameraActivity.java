@@ -46,7 +46,7 @@ public class CameraActivity extends Activity {
 
     public void savePicture(View view){
         mCamera.takePicture(null, null,
-                new PictureHandler(getApplicationContext()));
+                new PictureHandler(getApplicationContext(), type));
     }
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

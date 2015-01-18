@@ -31,6 +31,7 @@ public class CompletedActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_completed);
         String results = getIntent().getStringExtra("File Name");
+        //String type = getIntent().getStringExtra("Category");
         if(results.equals("Error")) {
             ((TextView)findViewById(R.id.titletext)).setText("Opps");
             ((TextView)findViewById(R.id.displayText)).setText("Something failed back there, please try again!");

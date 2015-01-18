@@ -28,9 +28,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 public class PictureHandler implements PictureCallback {
 
     private final Context context;
-
-    public PictureHandler(Context context) {
+    private String type;
+    public PictureHandler(Context context, String type) {
         this.context = context;
+        this.type = type;
     }
 
     @Override
@@ -63,6 +64,7 @@ public class PictureHandler implements PictureCallback {
             Intent intent = new Intent(context, CompletedActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("File Name", filename);
+            bundle.putString("Category", type);
             intent.putExtras(bundle);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);

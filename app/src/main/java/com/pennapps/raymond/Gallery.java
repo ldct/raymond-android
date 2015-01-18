@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.TextView;
 
 
 public class Gallery extends ActionBarActivity {
@@ -23,6 +24,7 @@ public class Gallery extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+        //((TextView)findViewById(R.id.heading)).
     }
 
 
