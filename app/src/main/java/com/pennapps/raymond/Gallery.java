@@ -19,6 +19,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.sql.DataSource;
+
 
 public class Gallery extends ActionBarActivity {
 
@@ -112,26 +114,29 @@ public class Gallery extends ActionBarActivity {
 
 
     public void refresh(View view){
-        //TODO
+
+        DataStructure ds = new Receipt(null, this);
+
         if (type.equals("Receipt")) {
-            Receipt rs = new Receipt(null, this);
-            ArrayList<Receipt> completeData = rs.getCompleteData();
-            Log.d("refresh", String.valueOf(completeData.size()));
-
-            for (Receipt r : completeData) {
-                // r.getToken();
-            }
-
-            ArrayList<String> tokenList = new ArrayList<String>();
-
-            Intent refreshDataIntent = new Intent(this, RefreshStatusService.class);
-            refreshDataIntent.putExtra(RefreshStatusService.PARAM_TOKENS, tokenList);
-
-            startService(refreshDataIntent);
-
-            Log.d("refresh", "done with starting service");
-
+            ds = new Receipt(null, this);
+        } else if (type.equals("BusinessCard")) {
+            ds = new BusinessCard(null, this);
+        } else if (type.equals("Nutrition")) {
+            ds = new Nutrition(null, this);
+        } else if (type.equals("Event")) {
+            ds = new Event(null, this);
+        } else {
+            Log.e("gallery", "unknown type");
         }
+
+        ArrayList<String> tokens = ds.getAllTokens();
+
+        Intent refreshDataIntent = new Intent(this, RefreshStatusService.class);
+        refreshDataIntent.putExtra(RefreshStatusService.PARAM_TOKENS, tokens);
+
+        startService(refreshDataIntent);
+
+        Log.d("refresh", "done with starting service");
 
 
     }
