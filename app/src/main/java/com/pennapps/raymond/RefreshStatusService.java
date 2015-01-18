@@ -26,11 +26,13 @@ import java.util.Iterator;
 public class RefreshStatusService extends IntentService {
 
     public static final String PARAM_TOKENS = "PARAM_TOKENS";
+    public static final String PARAM_CATEGORY = "PARAM_CATEGORY";
 
     public static final String BACKEND_BASE_URL = "http://104.131.66.104";
     public static final String BACKEND_BATCH_TASKS_URL = BACKEND_BASE_URL + "/batch_tasks";
 
     private ArrayList<String> tokens;
+    private String category;
 
     public RefreshStatusService() {
         super("RefreshStatusThread");
@@ -41,6 +43,7 @@ public class RefreshStatusService extends IntentService {
 
         Log.d("refresh", "handleIntent");
         tokens = intent.getStringArrayListExtra(PARAM_TOKENS);
+        category = intent.getStringExtra(PARAM_CATEGORY);
 
         for (String t : tokens) {
             Log.d("refresh", t);
@@ -83,31 +86,46 @@ public class RefreshStatusService extends IntentService {
                 Log.d("refresh", responseString);
                 JSONObject jObject = new JSONObject(responseString);
 
-                for (Iterator<String> ks = jObject.keys(); ks.hasNext();) {
-                    String token = ks.next();
-                    JSONObject v = jObject.getJSONObject(token);
+                if (category.equals("Receipt")) {
+                    for (Iterator<String> ks = jObject.keys(); ks.hasNext();) {
+                        String token = ks.next();
+                        JSONObject v = jObject.getJSONObject(token);
 
-                    String date = v.getString("date");
-                    String time = v.getString("time");
-                    String location = v.getString("location");
-                    JSONArray items = v.getJSONArray("items");
+                        String date = v.getString("date");
+                        String time = v.getString("time");
+                        String location = v.getString("location");
+                        JSONArray items = v.getJSONArray("items");
 
-                    for (int i=0; i < v.length() - 1; i++) {
-                        JSONObject item = items.getJSONObject(i);
-                        String item_name = item.getString("item");
-                        String price = item.getString("price");
-                        Log.d("refresh", item_name);
-                        Log.d("refresh", price);
+                        for (int i=0; i < v.length() - 1; i++) {
+                            JSONObject item = items.getJSONObject(i);
+                            String item_name = item.getString("item");
+                            String price = item.getString("price");
+                            Log.d("refresh", item_name);
+                            Log.d("refresh", price);
 
-                        Receipt r = new Receipt(new String[]{
-                                date, time, location, item_name, price
-                        }, getApplicationContext());
-                        r.addtoDB(token + String.valueOf(i), "inputImageFilePath");
-                        r.addThis(token + String.valueOf(i));
+                            Receipt r = new Receipt(new String[]{
+                                    date, time, location, item_name, price
+                            }, getApplicationContext());
+                            r.addtoDB(token + String.valueOf(i), "inputImageFilePath");
+                            r.addThis(token + String.valueOf(i));
+                        }
                     }
 
-                    Log.d("refresh", date + time + location);
+                } else if (category.equals("BusinessCard")) {
+                    for (Iterator<String> ks = jObject.keys(); ks.hasNext();) {
+                        String token = ks.next();
 
+                        String name = jObject.getString("name");
+                        String phone = jObject.getString("phone");
+                        String email = jObject.getString("email");
+                        String job = jObject.getString("job");
+                        String company = jObject.getString("company");
+
+                        BusinessCard b = new BusinessCard(new String[]{
+                                name, email, phone, job, company
+                        }, getApplicationContext());
+                        b.addThis(token);
+                    }
                 }
 
             } catch (Exception e) {

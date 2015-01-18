@@ -113,6 +113,7 @@ public class Gallery extends ListActivity {
 
         Intent refreshDataIntent = new Intent(this, RefreshStatusService.class);
         refreshDataIntent.putExtra(RefreshStatusService.PARAM_TOKENS, tokens);
+        refreshDataIntent.putExtra(RefreshStatusService.PARAM_CATEGORY, type);
 
         startService(refreshDataIntent);
 
