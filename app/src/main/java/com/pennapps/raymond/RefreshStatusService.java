@@ -140,12 +140,28 @@ public class RefreshStatusService extends IntentService {
                         String sodium = v.getString("sodium");
                         String sugar = v.getString("sugar");
 
-                        Log.d("refresh", name + calories + fat + protein + carbs + sodium + sugar);
-
                         Nutrition n = new Nutrition(new String[]{
                                 name, calories, fat, protein, carbs, sodium, sugar
                         }, getApplicationContext());
                         n.addThis(token);
+                    }
+                } else if (category.equals("Event")) {
+                    for (Iterator<String> ks = jObject.keys(); ks.hasNext();) {
+                        String token = ks.next();
+                        JSONObject v = jObject.getJSONObject(token);
+
+                        String name = v.getString("name");
+                        String date = v.getString("date");
+                        String time = v.getString("time");
+                        String location = v.getString("location");
+                        String price = v.getString("price");
+
+                        Log.d("refresh", name + date + time + location + price);
+
+                        Event e = new Event(new String[]{
+                                date, time, name, location, price
+                        }, getApplicationContext());
+                        e.addThis(token);
                     }
                 }
 
