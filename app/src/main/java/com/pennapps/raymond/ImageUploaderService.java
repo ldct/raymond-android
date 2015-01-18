@@ -90,12 +90,12 @@ public class ImageUploaderService extends IntentService {
                 Log.d("image", "response received");
 
                 StatusLine statusLine = response.getStatusLine();
-                if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+                if (statusLine.getStatusCode() == HttpStatus.SC_OK){
                     ByteArrayOutputStream out = new ByteArrayOutputStream();
                     response.getEntity().writeTo(out);
                     out.close();
                     responseString = out.toString();
-                } else{
+                } else {
                     response.getEntity().getContent().close();
                     throw new IOException(statusLine.getReasonPhrase());
                 }
@@ -105,13 +105,25 @@ public class ImageUploaderService extends IntentService {
             Log.d("image", "rs: " + responseString);
 
             if (inputCategory.equals("Receipt")) {
-                Log.d("image", "adding to db");
-                Receipt r = new Receipt(new String[]{
-                        "Date0","Time0","Location0","Item0","Price0" // Token, Image
-                }, getApplicationContext());
+                Receipt r = new Receipt(null, getApplicationContext());
                 r.addtoDB(responseString, inputImageFilePath);
-                r.addThis(responseString);
-                Log.d("image", "added to db");
+                //
+
+                Receipt r2 = new Receipt(new String[]{
+                        "Date4","Time4","Location4","Item4","Price4" // Token, Image
+                }, getApplicationContext());
+                r2.addThis("2c136bf621a5c937");
+
+
+            } else if (inputCategory.equals("Event")) {
+                Event e = new Event(null, getApplicationContext());
+                e.addtoDB(responseString, inputImageFilePath);
+            } else if (inputCategory.equals("BusinessCard")) {
+                BusinessCard b = new BusinessCard(null, getApplicationContext());
+                b.addtoDB(responseString, inputImageFilePath);
+            } else if (inputCategory.equals("Nutrition")) {
+                Nutrition n = new Nutrition(null, getApplicationContext());
+                n.addtoDB(responseString, inputImageFilePath);
             }
 
             return responseString;
