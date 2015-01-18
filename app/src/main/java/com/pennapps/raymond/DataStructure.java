@@ -1,6 +1,7 @@
 package com.pennapps.raymond;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -37,6 +38,7 @@ public abstract class DataStructure {
      * @return data
      */
     protected String getField(int id){
+        Log.d("db", String.valueOf(data.length));
         return data[id];
     }
 

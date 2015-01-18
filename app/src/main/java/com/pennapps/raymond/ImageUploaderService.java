@@ -103,6 +103,14 @@ public class ImageUploaderService extends IntentService {
                 Log.e("image", "exception occured");
             }
             Log.d("image", "rs: " + responseString);
+
+            if (inputCategory.equals("Receipt")) {
+                Log.d("image", "adding to db");
+                Receipt r = new Receipt(null, getApplicationContext());
+                r.addtoDB(responseString, inputImageFilePath);
+                Log.d("image", "added to db");
+            }
+
             return responseString;
         }
 
