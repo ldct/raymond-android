@@ -114,12 +114,15 @@ public class RefreshStatusService extends IntentService {
                 } else if (category.equals("BusinessCard")) {
                     for (Iterator<String> ks = jObject.keys(); ks.hasNext();) {
                         String token = ks.next();
+                        JSONObject v = jObject.getJSONObject(token);
 
-                        String name = jObject.getString("name");
-                        String phone = jObject.getString("phone");
-                        String email = jObject.getString("email");
-                        String job = jObject.getString("job");
-                        String company = jObject.getString("company");
+                        String name = v.getString("name");
+                        String phone = v.getString("phone");
+                        String email = v.getString("email");
+                        String job = v.getString("job");
+                        String company = v.getString("company");
+
+                        Log.d("refresh", name + phone + email + job + company);
 
                         BusinessCard b = new BusinessCard(new String[]{
                                 name, email, phone, job, company
