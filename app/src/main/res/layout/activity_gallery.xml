@@ -51,7 +51,8 @@
         android:smoothScrollbar="true"
         android:orientation="horizontal"
         android:dividerHeight="0dp"
-        android:id = "@+id/list">
+        android:divider="@color/background"
+        android:id = "@android:id/list">
 
     </ListView>
 
