@@ -36,26 +36,50 @@ public class Gallery extends ActionBarActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         LinearLayout ln = (LinearLayout)findViewById(R.id.chart);
-        if(type.equals("Receipt")){
-            ArrayList<Receipt> receipts = (new Receipt(null, this)).getCompleteData();
-            if(receipts.size()>=0) {
-                int size = receipts.get(0).getAllFields().length;
-                LinearLayout header = new LinearLayout(this);
-                LinearLayout.LayoutParams LLParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-                header.setWeightSum(size);
-                header.setBackgroundColor(getResources().getColor(R.color.background));
-                header.setLayoutParams(LLParams);
-                for(String s: receipts.get(0).getAllFields()){
-                    TextView tv = new TextView(this);
-                    tv.setTextColor(getResources().getColor(R.color.textdes));
-                    tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-                    tv.setText(s);
-                    header.addView(tv);
-                }
-                ln.addView(header);
-                for (Receipt data : receipts) {
-                }
+        ArrayList receipts;
+        if(type.equals("Receipt")) {
+            receipts = (new Receipt(null, this)).getCompleteData();
+        }else if(type.equals("Event")) {
+            receipts = (new Event(null, this)).getCompleteData();
+        }
+        else if(type.equals("BusinessCard")) {
+            receipts = (new BusinessCard(null, this)).getCompleteData();
+        }else{
+            receipts = (new Nutrition(null, this)).getCompleteData();
+        }
+        if(receipts.size()>0) {
+            int size = ((DataStructure)receipts.get(0)).getAllFields().length;
+            LinearLayout header = new LinearLayout(this);
+            LinearLayout.LayoutParams LLParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            header.setWeightSum(size);
+            header.setBackgroundColor(getResources().getColor(R.color.background));
+            header.setLayoutParams(LLParams);
+            for(String s: ((DataStructure)receipts.get(0)).getAllFields()){
+                TextView tv = new TextView(this);
+                tv.setTextColor(getResources().getColor(R.color.textdes));
+                tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+                tv.setText(s);
+                header.addView(tv);
             }
+            ln.addView(header);
+            for (DataStructure data : ((ArrayList<DataStructure>)receipts)) {
+                LinearLayout newRow = new LinearLayout(this);
+                newRow.setWeightSum(size);
+                newRow.setLayoutParams(LLParams);
+                newRow.setBackgroundColor(getResources().getColor(R.color.textdes));
+                for(int i =0; i < data.getAllFields().length; i++){
+                    TextView tv = new TextView(this);
+                    tv.setTextColor(getResources().getColor(R.color.text));
+                    tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+                    tv.setText(data.getField(i));
+                    newRow.addView(tv);
+                }
+                ln.addView(newRow);
+            }
+        }else{
+            TextView tv = new TextView(this);
+            tv.setText("No content yet, add some to your library by taking some pictures!");
+            ln.addView(tv);
         }
     }
 

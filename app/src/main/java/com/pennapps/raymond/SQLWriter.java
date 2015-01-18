@@ -37,12 +37,14 @@ public class SQLWriter extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         TABLE_NAME = name;
         titles = datanames;
+        onCreate(getWritableDatabase());
+
     }
 
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_NAME + "(";
+        String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (";
         for(String s: titles) {
             CREATE_CONTACTS_TABLE += s + " TEXT,";
             }
