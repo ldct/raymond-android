@@ -43,6 +43,10 @@ public class BusinessCard extends DataStructure{
         return getField(4);
     }
 
+    /**
+     * USE THIS TO GET COMPLETE DATA OF EVERYTHING
+     * @return
+     */
     public ArrayList<BusinessCard> getCompleteData(){
         ArrayList<String[]> temp =  getAllData();
         ArrayList<BusinessCard> returned = new ArrayList<BusinessCard>();

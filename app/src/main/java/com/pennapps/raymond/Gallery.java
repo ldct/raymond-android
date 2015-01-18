@@ -123,5 +123,12 @@ public class Gallery extends ActionBarActivity {
 
     public void refresh(View view){
         //TODO
+
+        BusinessCard bc = new BusinessCard(null,this);
+        ArrayList<BusinessCard> completeData = bc.getCompleteData();
+
+        //type is the category
+
+
     }
 }
