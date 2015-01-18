@@ -122,12 +122,30 @@ public class RefreshStatusService extends IntentService {
                         String job = v.getString("job");
                         String company = v.getString("company");
 
-                        Log.d("refresh", name + phone + email + job + company);
-
                         BusinessCard b = new BusinessCard(new String[]{
                                 name, email, phone, job, company
                         }, getApplicationContext());
                         b.addThis(token);
+                    }
+                } else if (category.equals("Nutrition")) {
+                    for (Iterator<String> ks = jObject.keys(); ks.hasNext();) {
+                        String token = ks.next();
+                        JSONObject v = jObject.getJSONObject(token);
+
+                        String name = v.getString("name");
+                        String calories = v.getString("calories");
+                        String fat = v.getString("fat");
+                        String protein = v.getString("protein");
+                        String carbs = v.getString("carbs");
+                        String sodium = v.getString("sodium");
+                        String sugar = v.getString("sugar");
+
+                        Log.d("refresh", name + calories + fat + protein + carbs + sodium + sugar);
+
+                        Nutrition n = new Nutrition(new String[]{
+                                name, calories, fat, protein, carbs, sodium, sugar
+                        }, getApplicationContext());
+                        n.addThis(token);
                     }
                 }
 
