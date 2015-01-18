@@ -48,7 +48,7 @@ public class Gallery extends ActionBarActivity {
             receipts = (new Nutrition(null, this)).getCompleteData();
         }
         if(receipts.size()>0) {
-            int size = ((DataStructure)receipts.get(0)).getAllFields().length;
+            int size = ((DataStructure)receipts.get(0)).getAllFields().length+2;
             LinearLayout header = new LinearLayout(this);
             LinearLayout.LayoutParams LLParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
             header.setWeightSum(size);
@@ -57,7 +57,7 @@ public class Gallery extends ActionBarActivity {
             for(String s: ((DataStructure)receipts.get(0)).getAllFields()){
                 TextView tv = new TextView(this);
                 tv.setTextColor(getResources().getColor(R.color.textdes));
-                tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+                tv.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
                 tv.setText(s);
                 header.addView(tv);
             }
@@ -67,10 +67,10 @@ public class Gallery extends ActionBarActivity {
                 newRow.setWeightSum(size);
                 newRow.setLayoutParams(LLParams);
                 newRow.setBackgroundColor(getResources().getColor(R.color.textdes));
-                for(int i =0; i < data.getAllFields().length; i++){
+                for(int i =0; i < data.getAllFields().length+2; i++){
                     TextView tv = new TextView(this);
                     tv.setTextColor(getResources().getColor(R.color.text));
-                    tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+                    tv.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
                     tv.setText(data.getField(i));
                     newRow.addView(tv);
                 }
@@ -119,5 +119,9 @@ public class Gallery extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_gallery, container, false);
             return rootView;
         }
+    }
+
+    public void refresh(View view){
+        //TODO
     }
 }
