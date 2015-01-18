@@ -1,5 +1,6 @@
 package com.pennapps.raymond;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -86,11 +87,28 @@ public class SQLWriter extends SQLiteOpenHelper {
                     data.add(cursor.getString(i));
                 }
                 // Adding contact to list
-                returnlist.add(data.toArray(new String[returnlist.size()]));
+                returnlist.add(new String[returnlist.size()]);
             } while (cursor.moveToNext());
         }
 
         // return contact list
         return returnlist;
+    }
+
+
+    // Adding new contact
+    public void addData(String[] data) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        int i = 0;
+        for(String s: titles ){
+            values.put(s, data[i]); // Contact Name
+            i++;
+        }
+
+        // Inserting Row
+        db.insert(TABLE_NAME, null, values);
+        db.close(); // Closing database connection
     }
 }

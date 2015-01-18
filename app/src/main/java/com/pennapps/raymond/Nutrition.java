@@ -7,13 +7,13 @@ import java.util.ArrayList;
 /**
  * Created by David Liu on 17/01/2015.
  */
-public class Receipt extends DataStructure{
+public class Nutrition extends DataStructure{
 
     private String[] data;
     private Context context;
-    public Receipt(String[] details, Context context){
-        super("Receipt", new String[]{
-                "Date","Time","Location","Item","Price"
+    public Nutrition(String[] details, Context context){
+        super("Nutrition", new String[]{
+                "Food","Calories","Fat","Protein","Carbs", "Sodium", "Sugar"
         }, details, context);
         data = details;
         this.context = context;
