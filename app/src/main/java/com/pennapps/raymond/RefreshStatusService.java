@@ -98,6 +98,12 @@ public class RefreshStatusService extends IntentService {
                         String price = item.getString("price");
                         Log.d("refresh", item_name);
                         Log.d("refresh", price);
+
+                        Receipt r = new Receipt(new String[]{
+                                date, time, location, item_name, price
+                        }, getApplicationContext());
+                        r.addtoDB(token + String.valueOf(i), "inputImageFilePath");
+                        r.addThis(token + String.valueOf(i));
                     }
 
                     Log.d("refresh", date + time + location);

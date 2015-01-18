@@ -103,11 +103,6 @@ public class ImageUploaderService extends IntentService {
                 Receipt r = new Receipt(null, getApplicationContext());
                 r.addtoDB(responseString, inputImageFilePath);
 
-                Receipt r2 = new Receipt(new String[]{
-                        "Date4","Time4","Location4","Item4","Price4" // Token, Image
-                }, getApplicationContext());
-                r2.addThis("2c136bf621a5c937");
-
 
             } else if (inputCategory.equals("Event")) {
                 Event e = new Event(null, getApplicationContext());
