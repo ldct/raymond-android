@@ -103,7 +103,6 @@ public class SQLWriter extends SQLiteOpenHelper {
     // Update new contact
     public void updateData(String[] data, String token) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectQuery = "Token FROM " + TABLE_NAME + "WHERE Token = ?";
 
 
         ContentValues values = new ContentValues();
